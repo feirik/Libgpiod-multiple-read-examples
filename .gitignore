@@ -1,0 +1,10 @@
+# Kernel module files
+*.ko
+*.cmd
+*.mod
+*.order
+*.symvers
+*.o
+
+# Output files
+*.out
