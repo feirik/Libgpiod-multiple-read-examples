@@ -26,3 +26,5 @@ Go to the libgpiod_examples folder and compile the programs.
 # sudo ./gpioReadMultipleCtxless.out
 ```
 It is important that the program is run with **sudo privileges**, else the read operation will fail.
+
+If everything works, the program should output that the GPIO lines 0, 1, 4 and 5 are high and the rest are low according to the mockup array in the kernel module.
