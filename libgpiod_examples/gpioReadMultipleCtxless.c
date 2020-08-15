@@ -26,7 +26,6 @@ int main(int argc, char **argv)
     for(int i = 0; i < NGPIO; i++)
     {
         offset[i] = i;
-        printf("Offset at loc %i is %i\n", i, offset[i]);
     }
 
     // Initalizing values to 0
