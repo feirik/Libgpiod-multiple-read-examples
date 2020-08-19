@@ -1,5 +1,5 @@
 ### Background
-The purpose of this repo is to show examples of how the [Libgpiod library](https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/?h=master) can be used to read multiple GPIO lines. The library is easy to use, but there are limited examples of how the library works in code.
+The purpose of this repo is to show examples of how the [Libgpiod library](https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/?h=master) can be used to read multiple GPIO lines. The library is easy to use, but there are limited code examples of how the library works.
 
 In short the library provides a simple API for accessing GPIO chips through the new char device interface. Behind the scenes the library issues IOCTL calls on the char device GPIO chip to get GPIO information to user space.
 
@@ -17,7 +17,7 @@ Go to the mockup_gpio_chip folder and compile the modules.
 # sudo insmod mockup_gpio_chip.ko
 # sudo lsmod | grep mockup
 ```
-If the modules are successfully, the kernel modules are ready to be used by Libgpiod!
+If the modules are successfully loaded, the kernel modules are ready to be used by Libgpiod.
 
 ### Building and using the libgpiod examples
 Go to the libgpiod_examples folder and compile the programs.
