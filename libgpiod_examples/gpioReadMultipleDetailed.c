@@ -41,14 +41,14 @@ int main(int argc, char **argv)
     }
 
     // Create a libgpiod bulk item for storing multiple lines
-	struct gpiod_line_bulk bulk;
-	
+    struct gpiod_line_bulk bulk;
+
     struct gpiod_chip *chip;
-	struct gpiod_line *line;
+    struct gpiod_line *line;
 
     // Status flag
-	int status;
-    
+    int status;
+
     /* Gpio flag for setting active low or active high 
     ** (Whether 1 is high or 0 is low)
     */
@@ -56,42 +56,48 @@ int main(int argc, char **argv)
 
     // Setting active to be high
     bool active_low = 0;
-	unsigned int i;
+    unsigned int i;
 
     // Checking to see if selected NGPIO is higher than max possible lines
-	if (NGPIO > GPIOD_LINE_BULK_MAX_LINES) {
-		errno = EINVAL;
-		return -1;
-	}
+    if (NGPIO > GPIOD_LINE_BULK_MAX_LINES) 
+    {
+        errno = EINVAL;
+        return -1;
+    }
     
     // Opening chip by label name
-	chip = gpiod_chip_open_lookup(label);
-	if (!chip)
-		return -1;
+    chip = gpiod_chip_open_lookup(label);
+    if (!chip)
+    {        
+        return -1;
+    }
 
     // Initializing the bulk struct to empty
-	gpiod_line_bulk_init(&bulk);
+    gpiod_line_bulk_init(&bulk);
 
-    // Opening up the lines and adding them to the bulk struct
-	for (i = 0; i < NGPIO; i++) {
-		line = gpiod_chip_get_line(chip, offset[i]);
-		if (!line) {
-			gpiod_chip_close(chip);
-			return -1;
-		}
-
-		gpiod_line_bulk_add(&bulk, line);
+    // Opening up the lines, updating each line and adding them to the bulk struct
+    for (i = 0; i < NGPIO; i++) {
+    {
+	line = gpiod_chip_get_line(chip, offset[i]);
+	if (!line)
+	{
+	    gpiod_chip_close(chip);
+	    return -1;
 	}
+
+	gpiod_line_bulk_add(&bulk, line);
+    }
 
     // Setting active to be high from active_low variable
-	flags = active_low ? GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW : 0;
-
+    flags = active_low ? GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW : 0;
+    
     // Reserving gpio lines
-	status = gpiod_line_request_bulk_input_flags(&bulk, consumer, flags);
-	if (status < 0) {
-		gpiod_chip_close(chip);
-		return -1;
-	}
+    status = gpiod_line_request_bulk_input_flags(&bulk, consumer, flags);
+    if (status < 0) 
+    {
+        gpiod_chip_close(chip);
+	return -1;
+    }
 
     // Ensuring values array is initialized to 0
     memset(values, 0, sizeof(*values) * NGPIO);
@@ -99,10 +105,10 @@ int main(int argc, char **argv)
     // Getting values from the gpio lines
     status = gpiod_line_get_value_bulk(&bulk, values);
 
-	gpiod_chip_close(chip);
+    gpiod_chip_close(chip);
 
     // Status is dependent on return values from libgpoid IOCTL calls
-	ret = status;    
+    ret = status;    
 
     // Libgpiod error check
     if(ret == -1)
