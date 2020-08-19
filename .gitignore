@@ -5,6 +5,7 @@
 *.order
 *.symvers
 *.o
+*.mod*
 
 # Output files
 *.out
