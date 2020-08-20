@@ -76,7 +76,7 @@ int main(int argc, char **argv)
     gpiod_line_bulk_init(&bulk);
 
     // Opening up the lines, updating each line and adding them to the bulk struct
-    for (i = 0; i < NGPIO; i++) {
+    for (i = 0; i < NGPIO; i++)
     {
 	line = gpiod_chip_get_line(chip, offset[i]);
 	if (!line)
