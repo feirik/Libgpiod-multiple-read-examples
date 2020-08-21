@@ -20,6 +20,7 @@ int main(int argc, char **argv)
     // Using the label name to access the gpiochip
     char *label = "mockup_gpio_chip";
 
+    // Consumer description for program accessing char device
     const char* consumer = "mockup_gpio_driver";
 
     // Offset array to select which gpio lines to read
@@ -28,7 +29,7 @@ int main(int argc, char **argv)
     // Values array to store the read values
     int values[NGPIO];
 
-    // Accessing offsets 0-15, base is at -1 for the mockup_gpio_chip
+    // Setting offsets to 0-15, base is at -1 for the mockup_gpio_chip
     for(int i = 0; i < NGPIO; i++)
     {
         offset[i] = i;
@@ -49,9 +50,7 @@ int main(int argc, char **argv)
     // Status flag
     int status;
 
-    /* Gpio flag for setting active low or active high 
-    ** (Whether 1 is high or 0 is low)
-    */
+    /* Gpio flag for setting active low or active high
     int flags;
 
     // Setting active to be high
@@ -93,7 +92,7 @@ int main(int argc, char **argv)
     
     // Reserving gpio lines
     status = gpiod_line_request_bulk_input_flags(&bulk, consumer, flags);
-    if (status < 0) 
+    if (status < 0)
     {
         gpiod_chip_close(chip);
 	return -1;
@@ -116,11 +115,11 @@ int main(int argc, char **argv)
         printf("Failed reading gpio lines for %s\n", label);
     }
     else
-    {   
+    {
         // Success, printing the read values
         for(int i = 0; i < NGPIO; i++)
         {
-            printf("Values at loc %i is %i\n", i, values[i]);
+            printf("Value at loc %i is %i\n", i, values[i]);
         }
     }
 
